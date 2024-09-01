@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 
-export default function Loans() {
+export default function Table() {
     return (
         <LoansStyle>
             <div className="bloco">

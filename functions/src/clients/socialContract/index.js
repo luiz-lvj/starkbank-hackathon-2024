@@ -1,10 +1,12 @@
 import axios from 'axios';
-import { SOCIAL_CONTRACT_API_URL } from './consts';
 
-const extractSocialContract = async (fileUri: string) => {
+const BACKEND_BASE_URL = process.env.BACKEND_BASE_URL;  
+const SOCIAL_CONTRACT_API_URL = `${BACKEND_BASE_URL}/socialContract-api`;
+
+const extractSocialContract = async (fileUri) => {
     const response = await axios.request({
         method: 'POST',
-        url: `${SOCIAL_CONTRACT_API_URL}/socialContract`,
+        url: `${SOCIAL_CONTRACT_API_URL}/socialContract/extract`,
         data: {
             fileUri: fileUri,
         },

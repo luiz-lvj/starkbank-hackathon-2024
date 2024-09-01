@@ -2,13 +2,15 @@ import SocialContractClient from "../../../clients/socialContract";
 import { calculateLoanData, getMatch } from "./utils";
 
 export interface Filters {
-    segment?: string;
+    segment?: string[];
     minimumTpv?: number;
     maximumTpv?: number;
-    minimumAverageTicket?: number;
-    maximumAverageTicket?: number;
+    minimumInvestmentValue?: number;
+    maximumInvestmentValue?: number;
+    socialCapital?: number;
     minimumStarkScore?: number;
     type?: string;
+    noLiability?: boolean;
 }
 
 export interface CreateLoanInput {
@@ -18,7 +20,6 @@ export interface CreateLoanInput {
 
 export interface CompanyData {
     tpv: number;
-    averageTicket: number;
     requestAmount: number;
 }
 

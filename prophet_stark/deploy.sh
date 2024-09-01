@@ -3,7 +3,6 @@
 # Configurações iniciais
 export PROJECT_ID="platao-stark-hackathon"
 export APP=prophetstark 
-export PORT=8080
 export REGION="us-central1"
 export TAG="gcr.io/$PROJECT_ID/$APP"
 
@@ -13,7 +12,7 @@ gcloud services enable cloudbuild.googleapis.com \
     run.googleapis.com
 
 # Construir a imagem Docker
-docker build -t $TAG .
+docker build --platform linux/amd64 -t $TAG .
 
 # Enviar a imagem para o Google Cloud Build
 gcloud builds submit --tag $TAG

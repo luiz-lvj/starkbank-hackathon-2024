@@ -3,14 +3,8 @@ import LoanService from '../services/loan';
 
 export const createLoan = async (req: Request, res: Response) => {
     try {
-        const { fileUri } = req.body;
+        const loanData = await LoanService.createLoan(req.body);
 
-        if (!fileUri) {
-            return res.status(400).json({ error: 'File URI is required' });
-        }
-
-        const loanData = await LoanService.createLoan(fileUri);
-        
         return res.status(200).json(loanData);
     } catch (error) {
         console.error('Error creating loan:', error);

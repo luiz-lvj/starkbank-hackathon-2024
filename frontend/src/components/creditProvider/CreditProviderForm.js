@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { TextField, Button, Checkbox, FormControlLabel, Select, MenuItem, Chip, InputLabel, FormControl, Box } from '@mui/material';
+import { TextField, Button, Checkbox, FormControlLabel, Select, MenuItem, Chip, InputLabel, FormControl, Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { styled } from '@mui/system';
+import { useApiClient } from '../../hooks/api';
 
 const Form = styled('form')({
   display: 'flex',
@@ -25,11 +26,33 @@ const RuleSubmissionForm = () => {
     maximumTpv: '',
     minimumInvestmentValue: '',
     maximumInvestmentValue: '',
-    socialCapital: '',
+    socialCapital: '', // Remover esta linha
     minimumStarkScore: '',
     type: '',
     noLiability: false,
   });
+
+  const [open, setOpen] = useState(false); // Estado para controlar o popup
+
+  const { saveFilters } = useApiClient(); // Adiciona o hook da API
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleConfirm = async () => {
+    setOpen(false);
+    try {
+      await saveFilters(filters); // Salva os filtros usando a API
+      console.log('Filtros salvos com sucesso:', filters);
+    } catch (error) {
+      console.error('Erro ao salvar filtros:', error);
+    }
+  };
 
   const handleMarketDelete = (marketToDelete) => () => {
     setFilters((prevFilters) => ({
@@ -45,41 +68,38 @@ const RuleSubmissionForm = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Lógica para aplicar as regras com base em filters
-    console.log(filters);
+    try {
+      await saveFilters(filters); // Salva os filtros usando a API
+      console.log('Filtros salvos com sucesso:', filters);
+    } catch (error) {
+      console.error('Erro ao salvar filtros:', error);
+    }
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <h2>Formulário de Regras</h2>
+    <Form onSubmit={(e) => { e.preventDefault(); handleClickOpen(); }}>
+      <h2>Regras para concessão de Crédito</h2>
       <TextField
         label="Limite de Valor Emitido (mín.)"
         type="number"
         value={filters.minimumTpv}
-        onChange={(e) => setFilters({ ...filters, minimumTpv: e.target.value })}
+        onChange={(e) => setFilters({ ...filters, minimumTpv: parseFloat(e.target.value) || '' })}
         fullWidth
       />
       <TextField
         label="Limite de Valor Emitido (máx.)"
         type="number"
         value={filters.maximumTpv}
-        onChange={(e) => setFilters({ ...filters, maximumTpv: e.target.value })}
+        onChange={(e) => setFilters({ ...filters, maximumTpv: parseFloat(e.target.value) || '' })}
         fullWidth
       />
       <TextField
         label="StarkScore (mín. 0 - máx. 1000)"
         type="number"
         value={filters.minimumStarkScore}
-        onChange={(e) => setFilters({ ...filters, minimumStarkScore: e.target.value })}
-        fullWidth
-      />
-      <TextField
-        label="Capital Social"
-        type="number"
-        value={filters.socialCapital}
-        onChange={(e) => setFilters({ ...filters, socialCapital: e.target.value })}
+        onChange={(e) => setFilters({ ...filters, minimumStarkScore: parseFloat(e.target.value) || '' })}
         fullWidth
       />
       <FormControl fullWidth>
@@ -94,14 +114,17 @@ const RuleSubmissionForm = () => {
         </ChipContainer>
       </FormControl>
       <FormControl fullWidth>
-        <Select
-          value={filters.type}
-          onChange={(e) => setFilters({ ...filters, type: e.target.value })}
-        >
-          <MenuItem value="SA">SA</MenuItem>
-          <MenuItem value="LTDA">LTDA</MenuItem>
-          <MenuItem value="MEI">MEI</MenuItem>
-        </Select>
+        <FormControl fullWidth>
+          <InputLabel>Tipo de Empresa</InputLabel>
+          <Select
+            value={filters.type}
+            onChange={(e) => setFilters({ ...filters, type: e.target.value })}
+          >
+            <MenuItem value="SA">SA</MenuItem>
+            <MenuItem value="LTDA">LTDA</MenuItem>
+            <MenuItem value="MEI">MEI</MenuItem>
+          </Select>
+        </FormControl>
       </FormControl>
       <FormControlLabel
         control={
@@ -115,6 +138,25 @@ const RuleSubmissionForm = () => {
       <Button type="submit" variant="contained" color="primary">
         Aplicar regras
       </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+      >
+        <DialogTitle>Criação de Regras</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Você confirma a criação dessas regras?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={handleConfirm} color="primary" autoFocus>
+            Confirmar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Form>
   );
 };

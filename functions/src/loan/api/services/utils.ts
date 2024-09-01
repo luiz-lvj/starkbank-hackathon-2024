@@ -1,9 +1,11 @@
-import { listFundsSpecifications } from "./const";
-import { CompanyData } from "./loan";
+import * as admin from "firebase-admin";
+import { CompanyData, Filters } from "./loan";
+
+const db = admin.firestore();
 
 // TODO: Use requested amount to get the match
-export function getMatch(starkScore: number, companyData: CompanyData, socialContract?: { atividadesEconomicas: string[] } & any) {
-    const listOfFunds = listFundsSpecifications();
+export async function getMatch(starkScore: number, companyData: CompanyData, socialContract?: { atividadesEconomicas: string[] } & any) {
+    const listOfFunds = await listFundsSpecifications();
 
     return listOfFunds.some(fund => {
         if (!getFundSpecification(fund.segment ?? [], socialContract?.atividadesEconomicas)) return false;
@@ -25,6 +27,11 @@ export async function calculateLoanData(starkScore: number, companyData: any, so
         loanInterestRate: 0.1,
         loanTerm: 12,
     };
+}
+
+export async function listFundsSpecifications() {
+    const funds = await db.collection('funds').get();
+    return funds.docs.map(doc => doc.data() as Filters);
 }
 
 function getFundSpecification(segmentSearch: string[], activitySearch: string[]) {

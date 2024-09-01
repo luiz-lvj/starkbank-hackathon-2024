@@ -1,5 +1,5 @@
-import SocialContractClient from "../../../clients/socialContract";
 import { calculateLoanData, getMatch } from "./utils";
+import SocialContractClient from "../../../clients/socialContract";
 
 export interface Filters {
     segment?: string[];

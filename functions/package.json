@@ -18,7 +18,7 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "firebase-admin": "^12.1.0",
-    "firebase-functions": "^5.0.0",
+    "firebase-functions": "^5.0.1",
     "moment": "^2.30.1",
     "starkbank": "^2.29.1"
   },

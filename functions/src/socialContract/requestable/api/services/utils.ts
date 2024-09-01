@@ -1,15 +1,18 @@
-import { Content } from "@google-cloud/vertexai";
+import { Content, Part } from "@google-cloud/vertexai";
 
 export function buildHistory(prompt: string, fileUri: string): Content[] {
-    const systemContent = {
-        role: 'system',
-        parts: [{ text: prompt }]
-    };
+    const filePart: Part[] = [{ fileData: { mimeType: 'application/pdf', fileUri } }];
 
-    const userContent = {
-        role: 'user',
-        parts: [{ fileData: { mimeType: 'application/pdf', fileUri } }]
-    };
+    const textPart: Part[] = [{ text: prompt }];
 
-    return [systemContent, userContent];
+    return [
+        {
+            role: 'user',
+            parts: textPart
+        },
+        {
+            role: 'user',
+            parts: filePart
+        }
+    ];
 }

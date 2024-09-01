@@ -1,6 +1,6 @@
 import { VertexAI } from "@google-cloud/vertexai";
 
-const projectId = 'platao-hackathon';
+const projectId = 'platao-stark-hackathon';
 
 const vertexAI = new VertexAI({project: projectId, location: 'us-central1'});
 

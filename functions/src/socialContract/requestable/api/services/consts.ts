@@ -22,6 +22,7 @@ export const socialCapitalPrompt = (() => [
             }
         ]
     }`,
+    `- O contrato é o seguinte:`
 ].join('\n'));
 
 export const informationToExtractPrompt = [

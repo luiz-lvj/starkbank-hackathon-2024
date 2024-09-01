@@ -18,10 +18,10 @@ export default function RightBar() {
 
 const SidebarContainer = styled.div`
     width: 280px;
-    height: 100%;
+    padding-top: 100px;
     position: fixed;
     right: 0;
-    background-color: #f5f5f5;
+    background-color: #FFFFFF;
     
     .button-container {
         width: 200px;

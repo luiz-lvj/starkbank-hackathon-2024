@@ -97,7 +97,7 @@ function LoanPopup({ open, onClose }) {
       const result = await apiClient.requestLoan(parseFloat(amount), fileRef);
 
       if (!result.hasLoanMatch) {
-        setResultMessage('Infelizmente não encontramos uma proposta por agora mas vamos te enviar caso apareça uma oportunidade');
+        setResultMessage('Infelizmente não temos como fornecer esse empréstimo no momento, mas entraremos em contato caso surja uma oportunidade!');
       } else {
         setResultMessage('Empréstimo solicitado com sucesso!');
       }

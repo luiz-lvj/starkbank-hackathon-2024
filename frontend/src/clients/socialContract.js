@@ -6,7 +6,7 @@ const SOCIAL_CONTRACT_API_URL = `${BACKEND_BASE_URL}/socialContract-api`;
 const extractSocialContract = async (fileUri) => {
     const response = await axios.request({
         method: 'POST',
-        url: `${SOCIAL_CONTRACT_API_URL}/socialContract/extract`,
+        url: `${SOCIAL_CONTRACT_API_URL}/extract`,
         data: {
             fileUri: fileUri,
         },

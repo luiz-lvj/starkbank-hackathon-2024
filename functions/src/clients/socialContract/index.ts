@@ -1,12 +1,11 @@
 import axios from 'axios';
 
-const BACKEND_BASE_URL = process.env.BACKEND_BASE_URL;  
-const SOCIAL_CONTRACT_API_URL = `${BACKEND_BASE_URL}/socialContract-api`;
+const SOCIAL_CONTRACT_API_URL = `https://us-central1-platao-stark-hackathon.cloudfunctions.net/loan-api/socialContract-api`;
 
 const extractSocialContract = async (fileUri: string) => {
     const response = await axios.request({
         method: 'POST',
-        url: `${SOCIAL_CONTRACT_API_URL}/socialContract/extract`,
+        url: `${SOCIAL_CONTRACT_API_URL}/extract`,
         data: {
             fileUri: fileUri,
         },

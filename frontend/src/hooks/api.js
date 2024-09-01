@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import SocialContractClient from '../clients/socialContract/index.js';
+import SocialContractClient from '../clients/socialContract';
 
 /**
  * @typedef {Object} LoanConfig

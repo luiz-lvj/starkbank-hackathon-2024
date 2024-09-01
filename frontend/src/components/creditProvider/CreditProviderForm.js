@@ -19,63 +19,72 @@ const ChipContainer = styled(Box)({
 });
 
 const RuleSubmissionForm = () => {
-  const [minValue, setMinValue] = useState('');
-  const [maxValue, setMaxValue] = useState('');
-  const [starkScore, setStarkScore] = useState('');
-  const [capitalSocial, setCapitalSocial] = useState('');
-  const [markets, setMarkets] = useState(['Agronegócio', 'Saúde', 'Tecnologia']);
-  const [locations, setLocations] = useState(['São Paulo', 'Acre', 'Fortaleza']);
-  const [companyType, setCompanyType] = useState('');
-  const [noJudicialPassives, setNoJudicialPassives] = useState(false);
+  const [filters, setFilters] = useState({
+    segment: ['Agronegócio', 'Saúde', 'Tecnologia'],
+    minimumTpv: '',
+    maximumTpv: '',
+    minimumInvestmentValue: '',
+    maximumInvestmentValue: '',
+    socialCapital: '',
+    minimumStarkScore: '',
+    type: '',
+    noLiability: false,
+  });
 
   const handleMarketDelete = (marketToDelete) => () => {
-    setMarkets((markets) => markets.filter((market) => market !== marketToDelete));
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      segment: prevFilters.segment.filter((market) => market !== marketToDelete),
+    }));
   };
 
   const handleLocationDelete = (locationToDelete) => () => {
-    setLocations((locations) => locations.filter((location) => location !== locationToDelete));
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      locations: prevFilters.locations.filter((location) => location !== locationToDelete),
+    }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Lógica para aplicar as regras
+    // Lógica para aplicar as regras com base em filters
+    console.log(filters);
   };
 
   return (
     <Form onSubmit={handleSubmit}>
-      <h2>FORMULÁRIO DE SUBMISSÃO DE REGRAS</h2>
+      <h2>Formulário de Regras</h2>
       <TextField
         label="Limite de Valor Emitido (mín.)"
         type="number"
-        value={minValue}
-        onChange={(e) => setMinValue(e.target.value)}
+        value={filters.minimumTpv}
+        onChange={(e) => setFilters({ ...filters, minimumTpv: e.target.value })}
         fullWidth
       />
       <TextField
         label="Limite de Valor Emitido (máx.)"
         type="number"
-        value={maxValue}
-        onChange={(e) => setMaxValue(e.target.value)}
+        value={filters.maximumTpv}
+        onChange={(e) => setFilters({ ...filters, maximumTpv: e.target.value })}
         fullWidth
       />
       <TextField
-        label="StarkScore (0-1000)"
+        label="StarkScore (mín. 0 - máx. 1000)"
         type="number"
-        value={starkScore}
-        onChange={(e) => setStarkScore(e.target.value)}
+        value={filters.minimumStarkScore}
+        onChange={(e) => setFilters({ ...filters, minimumStarkScore: e.target.value })}
         fullWidth
       />
       <TextField
         label="Capital Social"
         type="number"
-        value={capitalSocial}
-        onChange={(e) => setCapitalSocial(e.target.value)}
+        value={filters.socialCapital}
+        onChange={(e) => setFilters({ ...filters, socialCapital: e.target.value })}
         fullWidth
       />
       <FormControl fullWidth>
-        <InputLabel>Mercado da Empresa</InputLabel>
         <ChipContainer>
-          {markets.map((market) => (
+          {filters.segment.map((market) => (
             <Chip
               key={market}
               label={market}
@@ -85,22 +94,9 @@ const RuleSubmissionForm = () => {
         </ChipContainer>
       </FormControl>
       <FormControl fullWidth>
-        <InputLabel>Localidade da Empresa</InputLabel>
-        <ChipContainer>
-          {locations.map((location) => (
-            <Chip
-              key={location}
-              label={location}
-              onDelete={handleLocationDelete(location)}
-            />
-          ))}
-        </ChipContainer>
-      </FormControl>
-      <FormControl fullWidth>
-        <InputLabel>Tipo de Empresa</InputLabel>
         <Select
-          value={companyType}
-          onChange={(e) => setCompanyType(e.target.value)}
+          value={filters.type}
+          onChange={(e) => setFilters({ ...filters, type: e.target.value })}
         >
           <MenuItem value="SA">SA</MenuItem>
           <MenuItem value="LTDA">LTDA</MenuItem>
@@ -110,8 +106,8 @@ const RuleSubmissionForm = () => {
       <FormControlLabel
         control={
           <Checkbox
-            checked={noJudicialPassives}
-            onChange={(e) => setNoJudicialPassives(e.target.checked)}
+            checked={filters.noLiability}
+            onChange={(e) => setFilters({ ...filters, noLiability: e.target.checked })}
           />
         }
         label="Sócios sem Passivos Judiciais"

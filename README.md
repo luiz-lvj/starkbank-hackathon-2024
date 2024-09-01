@@ -1,4 +1,19 @@
-# starkbank-hackathon-2024
+# Stark Bank Hackathon 2024
+
+## Project Structure
+
+- frontend: User interface
+- functions: Application backend
+- prophet_stark: Score calculation model
+
+## Technologies Used
+
+- Backend: TypeScript, Python
+- Frontend: React
+- Machine Learning: Prophet (Facebook)
+- AI: Gemini AI (Google)
+- Database: Google Cloud Firestore
+- Storage: Google Cloud Storage
 
 ## Development Environment
 

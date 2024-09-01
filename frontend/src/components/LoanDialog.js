@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
-import { useSocialContractClient } from '../hooks/socialContract';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
+import { useApiClient } from '../hooks/api';
 import styled from 'styled-components';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
 
 const StyledDialog = styled(Dialog)`
   .MuiPaper-root {
@@ -10,7 +12,6 @@ const StyledDialog = styled(Dialog)`
 `;
 
 const StyledDialogTitle = styled(DialogTitle)`
-  background-color: #F7F9FA;
   padding: 24px;
 `;
 
@@ -31,20 +32,52 @@ const StyledButton = styled(Button)`
   padding: 8px 16px;
 `;
 
+const StyledUploadButton = styled(Button)`
+  margin-top: 16px;
+`;
+
 function LoanPopup({ open, onClose }) {
   const [amount, setAmount] = useState('');
-  const socialContractClient = useSocialContractClient();
+  const [pdfFile, setPdfFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const apiClient = useApiClient();
 
   const handleClose = () => { console.log('close'); onClose(); }
 
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type === 'application/pdf') {
+      setPdfFile(file);
+    } else {
+      alert('Por favor, selecione um arquivo PDF válido.');
+    }
+  };
+
   const handleSubmit = async () => {
+    if (!pdfFile) {
+      alert('Por favor, faça o upload de um PDF antes de solicitar o empréstimo.');
+      return;
+    }
+
+    setIsLoading(true);
+
     try {
-      await socialContractClient.requestLoan(parseFloat(amount));
+      // Upload do arquivo para o Firebase Storage
+      const storage = getStorage();
+      const fileRef = ref(storage, `social_contracts/${uuidv4()}_${pdfFile.name}`);
+      await uploadBytes(fileRef, pdfFile);
+      const downloadURL = await getDownloadURL(fileRef);
+
+      // Solicitar empréstimo com o URL do arquivo
+      await apiClient.requestLoan(parseFloat(amount), downloadURL);
+      
       handleClose();
-      // Adicione aqui uma notificação de sucesso, se desejar
+      alert('Empréstimo solicitado com sucesso!');
     } catch (error) {
       console.error('Erro ao solicitar empréstimo:', error);
-      // Adicione aqui uma notificação de erro, se desejar
+      alert('Ocorreu um erro ao solicitar o empréstimo. Por favor, tente novamente.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -63,10 +96,37 @@ function LoanPopup({ open, onClose }) {
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
+        <Typography variant="body2" color="textSecondary" gutterBottom>
+          Faça o upload do contrato social para garantir melhor aprovação do seu empréstimo.
+        </Typography>
+        <input
+          accept="application/pdf"
+          style={{ display: 'none' }}
+          id="pdf-upload"
+          type="file"
+          onChange={handleFileChange}
+        />
+        <label htmlFor="pdf-upload">
+          <StyledUploadButton variant="outlined" component="span">
+            {pdfFile ? 'PDF selecionado' : 'Selecionar PDF'}
+          </StyledUploadButton>
+        </label>
+        {pdfFile && (
+          <Typography variant="body2" color="textSecondary" style={{ marginTop: 8 }}>
+            Arquivo selecionado: {pdfFile.name}
+          </Typography>
+        )}
       </StyledDialogContent>
       <StyledDialogActions>
-        <StyledButton onClick={handleClose} variant="outlined">Cancelar</StyledButton>
-        <StyledButton onClick={handleSubmit} variant="contained" color="primary">Solicitar</StyledButton>
+        <StyledButton onClick={handleClose} variant="outlined" disabled={isLoading}>Cancelar</StyledButton>
+        <StyledButton 
+          onClick={handleSubmit} 
+          variant="contained" 
+          color="primary" 
+          disabled={isLoading}
+        >
+          {isLoading ? 'Enviando...' : 'Solicitar'}
+        </StyledButton>
       </StyledDialogActions>
     </StyledDialog>
   );

@@ -12,13 +12,13 @@ export const socialCapitalPrompt = (() => [
     `Retorne APENAS um JSON do tipo:
     {
         "capitalSocial": number,
+        "atividadesEconomicas": string,
+        "tipoEmpresa": string,
         "socios": [
             {
                 "nome": string,
                 "cpf": string,
-                "atividadesEconomicas": string,
                 "cep": string,
-                "tipoEmpresa": string
             }
         ]
     }`,

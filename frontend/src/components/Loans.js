@@ -20,7 +20,6 @@ const LoansStyle = styled.div`
         margin: 0 0 4px 0;
     }
     
-    
     #bloco {
         margin-top: 100px;
         width: calc(100% - 240px - 360px);

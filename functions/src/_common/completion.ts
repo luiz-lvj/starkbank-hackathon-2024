@@ -1,7 +1,7 @@
+import { Content } from "@google-cloud/vertexai";
 import model from "./model";
-import { Content } from "firebase/vertexai-preview";
 
-async function getCompletionPdf(fileUri: string, query: string, history?: Content[]) {
+async function getCompletionPdf(query: string, history?: Content[]) {
     // Provide a prompt that contains text
     const chat = model.startChat({ history });
 
@@ -9,6 +9,8 @@ async function getCompletionPdf(fileUri: string, query: string, history?: Conten
     const result = await chat.sendMessage(query);
 
     const modelResponse = result.response;
+
+    if (!modelResponse.candidates) return;
 
     return modelResponse;
 }

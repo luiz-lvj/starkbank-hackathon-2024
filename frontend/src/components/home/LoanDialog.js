@@ -41,20 +41,30 @@ function LoanPopup({ open, onClose }) {
   const [pdfFile, setPdfFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('');
+  const [resultMessage, setResultMessage] = useState('');
+  const [requestFailed, setRequestFailed] = useState(false);
   const apiClient = useApiClient();
 
-  const handleClose = () => { console.log('close'); onClose(); }
+  const handleClose = () => { 
+    console.log('close'); 
+    onClose(); 
+    setResultMessage(''); // Limpar mensagem ao fechar
+    setRequestFailed(false); // Resetar estado de falha ao fechar
+  }
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file && file.type === 'application/pdf') {
       setPdfFile(file);
     } else {
-      alert('Por favor, selecione um arquivo PDF válido.');
+      setResultMessage('Por favor, selecione um arquivo PDF válido.');
     }
   };
+
   const handleSubmit = async () => {
     setIsLoading(true);
+    setResultMessage('');
+    setRequestFailed(false);
 
     try {
       // Upload do arquivo para o Firebase Storage
@@ -84,12 +94,20 @@ function LoanPopup({ open, onClose }) {
       }
 
       // Solicitar empréstimo com o URL do arquivo
-      await apiClient.requestLoan(parseFloat(amount), fileRef);
-      
-      handleClose();
-      alert('Empréstimo solicitado com sucesso!');
+      const result = await apiClient.requestLoan(parseFloat(amount), fileRef);
+
+      if (!result.hasLoanMatch) {
+        setResultMessage('Infelizmente não temos como fornecer esse empréstimo no momento, mas entraremos em contato caso surja uma oportunidade!');
+      } else {
+        setResultMessage('Empréstimo solicitado com sucesso!');
+      }
+
+      // Mostrar resultado para o cliente
+      console.log('Resultado da solicitação:', result);
     } catch (error) {
       console.error('Erro ao solicitar empréstimo:', error);
+      setResultMessage('Erro ao solicitar empréstimo. Por favor, tente novamente.');
+      setRequestFailed(true);
     } finally {
       setIsLoading(false);
       setLoadingMessage('');
@@ -103,6 +121,10 @@ function LoanPopup({ open, onClose }) {
         {isLoading ? (
           <Typography variant="body2" color="textSecondary">
             {loadingMessage}
+          </Typography>
+        ) : resultMessage ? (
+          <Typography variant="body2" color="textSecondary" style={{ marginTop: 8 }}>
+            {resultMessage}
           </Typography>
         ) : (
           <>
@@ -137,19 +159,26 @@ function LoanPopup({ open, onClose }) {
                 Arquivo selecionado: {pdfFile.name}
               </Typography>
             )}
+            {requestFailed && (
+              <Typography variant="body2" color="error" style={{ marginTop: 8 }}>
+                Não foi possível processar sua solicitação. Por favor, tente novamente.
+              </Typography>
+            )}
           </>
         )}
       </StyledDialogContent>
       <StyledDialogActions>
         <StyledButton onClick={handleClose} variant="outlined" disabled={isLoading}>Cancelar</StyledButton>
-        <StyledButton 
-          onClick={handleSubmit} 
-          variant="contained" 
-          color="primary" 
-          disabled={isLoading}
-        >
-          {isLoading ? 'Enviando...' : 'Solicitar'}
-        </StyledButton>
+        {!resultMessage && (
+          <StyledButton 
+            onClick={handleSubmit} 
+            variant="contained" 
+            color="primary" 
+            disabled={isLoading}
+          >
+            {isLoading ? 'Enviando...' : 'Solicitar'}
+          </StyledButton>
+        )}
       </StyledDialogActions>
     </StyledDialog>
   );

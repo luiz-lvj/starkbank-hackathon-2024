@@ -64,6 +64,6 @@ npm run firebase
 
 ```bash
 # Fronted
-cd functions
+cd frontend
 npm run start
 ```

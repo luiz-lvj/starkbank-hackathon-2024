@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/home/Sidebar";
+import CreditProvider from "./pages/CreditProvider";
 import './styles/App.css';
 import '@fontsource-variable/montserrat';
 
@@ -12,7 +13,7 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
-            {/* Adicione outras rotas aqui */}
+            <Route path="/credit-providers" element={<CreditProvider />} />
           </Routes>
         </main>
       </div>

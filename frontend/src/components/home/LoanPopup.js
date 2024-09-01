@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
-import { useSocialContractClient } from '../hooks/api';
+import { useSocialContractClient } from '../../hooks/api';
 
 function LoanPopup({ open, onClose }) {
     const [amount, setAmount] = useState('');

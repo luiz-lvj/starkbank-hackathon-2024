@@ -182,7 +182,7 @@ function LoanPopup({ open, onClose }) {
         )}
       </StyledDialogContent>
       <StyledDialogActions>
-        <StyledButton onClick={handleClose} variant="outlined" disabled={isLoading}>Cancelar</StyledButton>
+        <StyledButton onClick={handleClose} variant="outlined" disabled={isLoading}>Fechar</StyledButton>
         {!resultMessage && (
           <StyledButton 
             onClick={handleSubmit} 

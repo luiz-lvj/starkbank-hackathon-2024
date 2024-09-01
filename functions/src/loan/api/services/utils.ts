@@ -22,8 +22,8 @@ export async function getMatch(starkScore: number, companyData: CompanyData, soc
 
     return listOfFunds.some(fund => {
         if (!getFundSpecification(fund.segment ?? [], socialContract?.atividadesEconomicas)) return false;
-        if (fund.minimumTpv && companyData.tpv < fund.minimumTpv) return false;
-        if (fund.maximumTpv && companyData.tpv > fund.maximumTpv) return false;
+        if (fund.minimumTpv && companyData.requestAmount < fund.minimumTpv) return false;
+        if (fund.maximumTpv && companyData.requestAmount > fund.maximumTpv) return false;
         if (fund.minimumStarkScore && starkScore < fund.minimumStarkScore) return false;
         if (fund.type && fund.type !== socialContract?.tipoEmpresa) return false;
         if (fund.noLiability && fund.noLiability !== (socialContract?.temPassivo ?? false)) return false;

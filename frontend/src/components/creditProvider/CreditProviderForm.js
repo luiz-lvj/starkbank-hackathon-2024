@@ -150,7 +150,7 @@ const RuleSubmissionForm = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Cancelar
+            Fechar
           </Button>
           <Button onClick={handleConfirm} color="primary" autoFocus>
             Confirmar

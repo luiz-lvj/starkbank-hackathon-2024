@@ -49,17 +49,6 @@
       "predeploy": [
         "npm run build --prefix functions"
       ]
-    },
-    {
-      "source": "prophet_stark",
-      "codebase": "prophet_stark",
-      "ignore": [
-        "venv",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
-        "*.local"
-      ]
     }
   ],
   "hosting": {

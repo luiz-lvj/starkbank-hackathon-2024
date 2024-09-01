@@ -1,5 +1,6 @@
 import { calculateLoanData, getMatch } from "./utils";
 import SocialContractClient from "../../../clients/socialContract";
+import PrevisionModelClient from "../../../clients/previsionModel";
 
 export interface Filters {
     segment?: string[];
@@ -33,7 +34,7 @@ async function createLoan(input: CreateLoanInput) {
     }
 
     // Should calculate stark score here
-    const starkScore = 800;
+    const starkScore = await PrevisionModelClient.getStarkScore().then((response) => response.starkScore);
 
     const companyData = {
         tpv: 1000,

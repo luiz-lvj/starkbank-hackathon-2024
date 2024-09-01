@@ -21,7 +21,7 @@ const ChipContainer = styled(Box)({
 
 const RuleSubmissionForm = () => {
   const [filters, setFilters] = useState({
-    segment: ['Agronegócio', 'Saúde', 'Tecnologia'],
+    segment: ['Agronegócio', 'Saúde', 'Tratamento de dados'],
     minimumTpv: '',
     maximumTpv: '',
     minimumInvestmentValue: '',
@@ -34,7 +34,7 @@ const RuleSubmissionForm = () => {
 
   const [open, setOpen] = useState(false); // Estado para controlar o popup
 
-  const { saveFilters } = useApiClient(); // Adiciona o hook da API
+  const { saveFilter } = useApiClient(); // Adiciona o hook da API
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -47,7 +47,7 @@ const RuleSubmissionForm = () => {
   const handleConfirm = async () => {
     setOpen(false);
     try {
-      await saveFilters(filters); // Salva os filtros usando a API
+      await saveFilter(filters); // Salva os filtros usando a API
       console.log('Filtros salvos com sucesso:', filters);
     } catch (error) {
       console.error('Erro ao salvar filtros:', error);
@@ -71,7 +71,7 @@ const RuleSubmissionForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await saveFilters(filters); // Salva os filtros usando a API
+      await saveFilter(filters); // Salva os filtros usando a API
       console.log('Filtros salvos com sucesso:', filters);
     } catch (error) {
       console.error('Erro ao salvar filtros:', error);

@@ -33,7 +33,7 @@ async function createLoan(input: CreateLoanInput) {
     }
 
     // Should calculate stark score here
-    const starkScore = 150;
+    const starkScore = 800;
 
     const companyData = {
         tpv: 1000,

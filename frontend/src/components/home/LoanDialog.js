@@ -94,7 +94,7 @@ function LoanPopup({ open, onClose }) {
       }
 
       // Solicitar empréstimo com o URL do arquivo
-      const result = await apiClient.requestLoan(parseFloat(amount), fileRef);
+      const result = await apiClient.requestLoan(parseFloat(amount), `gs://${fileRef.bucket}/${fileRef.fullPath}`);
 
       if (!result.hasLoanMatch) {
         setResultMessage('Infelizmente não temos como fornecer esse empréstimo no momento, mas entraremos em contato caso surja uma oportunidade!');

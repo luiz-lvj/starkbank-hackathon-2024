@@ -9,6 +9,8 @@ const LOAN_API_URL = `${BACKEND_BASE_URL}/loan-api`;
  * @property {number} requestAmount - The amount requested for the loan.
  */
 const createLoan = async (input) => {
+
+    console.log('input', input);
     const response = await axios.request({
         method: 'POST',
         url: `${LOAN_API_URL}/create`,

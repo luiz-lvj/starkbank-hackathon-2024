@@ -5,7 +5,6 @@ import RightBar from "../components/home/RightBar";
 import Table from "../components/home/Table";
 
 export default function Home() {
-
     return (
         <HomeStyle>
             <Loans />

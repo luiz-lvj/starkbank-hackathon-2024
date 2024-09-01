@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import AddIcon from "@mui/icons-material/Add";
-import starkBankLogo from '../assets/starkbank-logo.png';
+import starkBankLogo from '../../assets/starkbank-logo.png';
 
 export default function Sidebar() {
   return (

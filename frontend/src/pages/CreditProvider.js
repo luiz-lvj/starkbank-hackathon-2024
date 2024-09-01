@@ -1,20 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import Loans from "../components/home/Loans";
-import RightBar from "../components/home/RightBar";
-import Table from "../components/home/Table";
+import CreditProviderForm from "../components/creditProvider/CreditProviderForm";
 
-export default function Home() {
-
+export default function CreditProvider() {
     return (
-        <HomeStyle>
-            <Loans />
-            <Table />
-            <RightBar />
-        </HomeStyle>
+        <CreditProviderForm />
     );
 }
 
 const HomeStyle = styled.div`
-    // ... seu CSS aqui ...
+
 `;

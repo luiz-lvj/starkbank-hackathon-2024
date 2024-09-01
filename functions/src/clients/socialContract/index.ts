@@ -1,19 +1,19 @@
 import axios from 'axios';
 import { SOCIAL_CONTRACT_API_URL } from './consts';
 
-const getSocialContract = async (workspaceId: string) => {
+const extractSocialContract = async (fileUri: string) => {
     const response = await axios.request({
         method: 'POST',
         url: `${SOCIAL_CONTRACT_API_URL}/socialContract`,
         data: {
-            workspaceId,
+            fileUri: fileUri,
         },
     });
     return response.data;
 }
 
 const SocialContractClient = {
-    getSocialContract,
+    extractSocialContract,
 }
 
 export default SocialContractClient;

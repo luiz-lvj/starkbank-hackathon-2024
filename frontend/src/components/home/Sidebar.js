@@ -78,7 +78,7 @@ const SidebarStyle = styled.div`
   }
 
   .menu-text {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     margin-left: 35px;
     font-size: 16px;
     color: #637282;
@@ -90,13 +90,13 @@ const SidebarStyle = styled.div`
     object-fit: contain;
     justify-content: flex-start;
     margin-right: auto;
-    margin-left: 30px;
+    margin-left: 50px;
   }
 
   .menu-item {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     font-size: 16px;
     color: #637282;
     cursor: pointer;

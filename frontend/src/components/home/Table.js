@@ -1,6 +1,18 @@
 import styled from "styled-components";
+import { useState, useEffect } from 'react';
+import { useApiClient } from '../../hooks/api';
+import moment from 'moment';
 
 export default function Table() {
+    const [loans, setLoans] = useState([]);
+
+
+    const { getLoans } = useApiClient();
+
+    useEffect(() => {
+        getLoans().then(setLoans);
+    }, [getLoans]);
+
     return (
         <LoansStyle>
             <div className="bloco">
@@ -18,16 +30,20 @@ export default function Table() {
                     <table className="dashboard-table">
                         <thead>
                         <tr>
-                            <th>Total</th>
-                            <th>Conceição</th>
+                            <th>Concessão</th>
                             <th>Vencimento</th>
-                            <th>Status</th>
-                            <th>Pendência</th>
-                            <th>Integral</th>
+                            <th>Juros</th>
                         </tr>
                         </thead>
                         <tbody>
                         {/* As linhas de dados virão aqui */}
+                        {loans.map((loan) => (
+                            <tr key={loan.id}>
+                                <td>{`R$ ${loan.loanAmount.toFixed(2)}`}</td>
+                                <td>{moment().add(loan.loanTerm, 'months').format('MM/YYYY')}</td>
+                                <td>{loan.loanInterestRate}</td>
+                            </tr>
+                        ))}
                         </tbody>
                     </table>
                 </div>

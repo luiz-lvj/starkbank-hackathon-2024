@@ -20,11 +20,8 @@ export default function Loans() {
                         <thead>
                         <tr>
                             <th>Total</th>
-                            <th>Conceição</th>
-                            <th>Vencimento</th>
-                            <th>Status</th>
-                            <th>Pendência</th>
-                            <th>Integral</th>
+                            <th></th>
+                            <th>Juros</th>
                         </tr>
                         </thead>
                         <tbody>

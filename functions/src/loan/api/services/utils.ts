@@ -26,7 +26,7 @@ export async function getMatch(starkScore: number, companyData: CompanyData, soc
         if (fund.maximumTpv && companyData.tpv > fund.maximumTpv) return false;
         if (fund.minimumStarkScore && starkScore < fund.minimumStarkScore) return false;
         if (fund.type && fund.type !== socialContract?.tipoEmpresa) return false;
-        if (fund.noLiability !== (socialContract?.temPassivo ?? false)) return false;
+        if (fund.noLiability && fund.noLiability !== (socialContract?.temPassivo ?? false)) return false;
         return true;
     });
 }
@@ -35,8 +35,8 @@ export async function calculateLoanData(starkScore: number, companyData: any, so
     console.log('performing some calculations...');
 
     return {
-        loanAmount: 1000,
-        loanInterestRate: 0.1,
+        loanAmount: companyData.requestAmount,
+        loanInterestRate: `1.2%`,
         loanTerm: 12,
     };
 }

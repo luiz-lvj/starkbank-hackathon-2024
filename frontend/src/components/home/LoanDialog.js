@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import { useApiClient } from '../../hooks/api';
 import styled from 'styled-components';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 
 const StyledDialog = styled(Dialog)`
@@ -43,6 +43,7 @@ function LoanPopup({ open, onClose }) {
   const [loadingMessage, setLoadingMessage] = useState('');
   const [resultMessage, setResultMessage] = useState('');
   const [requestFailed, setRequestFailed] = useState(false);
+  const [success, setSuccess] = useState(false);
   const apiClient = useApiClient();
 
   const handleClose = () => { 
@@ -50,6 +51,7 @@ function LoanPopup({ open, onClose }) {
     onClose(); 
     setResultMessage(''); // Limpar mensagem ao fechar
     setRequestFailed(false); // Resetar estado de falha ao fechar
+    setSuccess(false);
   }
 
   const handleFileChange = (event) => {
@@ -97,9 +99,17 @@ function LoanPopup({ open, onClose }) {
       const result = await apiClient.requestLoan(parseFloat(amount), `gs://${fileRef.bucket}/${fileRef.fullPath}`);
 
       if (!result.hasLoanMatch) {
-        setResultMessage('Infelizmente não temos como fornecer esse empréstimo no momento, mas entraremos em contato caso surja uma oportunidade!');
+        setResultMessage('Infelizm ente não temos como fornecer esse empréstimo no momento, mas entraremos em contato caso surja uma oportunidade!');
       } else {
-        setResultMessage('Empréstimo solicitado com sucesso!');
+        setSuccess(true);
+        setResultMessage([
+          `Empréstimo solicitado com sucesso!`, 
+          `Você solicitou um adiantamento de recebíveis para capital de giro no valor de R$ ${result.loanAmount.toFixed(2)}.`,
+          `A taxa de juros é de ${result.loanInterestRate} ao mês, com um prazo de ${result.loanTerm} meses para pagamento.`,
+          `Agradecemos pela sua confiança!`
+        ].join('\n')
+        );
+        await apiClient.saveLoan(result);
       }
 
       // Mostrar resultado para o cliente
@@ -123,7 +133,11 @@ function LoanPopup({ open, onClose }) {
             {loadingMessage}
           </Typography>
         ) : resultMessage ? (
-          <Typography variant="body2" color="textSecondary" style={{ marginTop: 8 }}>
+          <Typography
+            variant="body2"
+            color={success ? "success.main" : "error.main"}
+            style={{ marginTop: 8 }}
+          >
             {resultMessage}
           </Typography>
         ) : (

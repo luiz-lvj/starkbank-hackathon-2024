@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BACKEND_BASE_URL = process.env.BACKEND_BASE_URL;
+const BACKEND_BASE_URL = 'https://us-central1-platao-stark-hackathon.cloudfunctions.net/';
 const LOAN_API_URL = `${BACKEND_BASE_URL}/loan-api`;
 
 /**
@@ -11,7 +11,7 @@ const LOAN_API_URL = `${BACKEND_BASE_URL}/loan-api`;
 const createLoan = async (input) => {
     const response = await axios.request({
         method: 'POST',
-        url: `${LOAN_API_URL}/loan/create`,
+        url: `${LOAN_API_URL}/create`,
         data: {
             ...input,
         },

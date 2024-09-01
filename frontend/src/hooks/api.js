@@ -21,15 +21,11 @@ export const useApiClient = () => {
     };
     
     const requestLoan = async (amount, fileUri) => {
-        if (fileUri !== undefined) {
-            const socialContract = await extractSocialContract(fileUri);
-            console.log(socialContract);
-            const result = await LoanClient.requestLoan({ requestAmount: amount, socialContract: socialContract });
-            return result;
-        } else {
-            const result = await LoanClient.requestLoan({ requestAmount: amount });
-            return result;
-        }
+        const result = await LoanClient.createLoan({
+            requestAmount: amount,
+            ...(fileUri && { fileUri })
+        });
+        return result;
     };
 
     const saveFilter = async (filter) => {

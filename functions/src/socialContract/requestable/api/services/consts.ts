@@ -6,14 +6,16 @@ export const socialCapitalPrompt = (() => [
     `- Nome dos sócios.`,
     `- CPF dos sócios.`,
     `- Atividades econômicas.`,
-    `- CEP da localidade.`,
+    `- CEP da localidade de cada um dos sócios.`,
+    `- CEP da localidade da sede da empresa.`,
     `- Tipo de empresa (se é SA, LTDA, etc).`,
     ``,
     `Retorne APENAS um JSON do tipo:
     {
         "capitalSocial": number,
-        "atividadesEconomicas": string,
+        "atividadesEconomicas": string[],
         "tipoEmpresa": string,
+        "cepSede": string,
         "socios": [
             {
                 "nome": string,

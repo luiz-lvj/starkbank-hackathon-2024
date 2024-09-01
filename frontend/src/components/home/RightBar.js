@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Button } from "@mui/material";
-import LoanPopup from "./home/LoanDialog";
+import LoanPopup from "./LoanDialog";
 
 export default function RightBar() {
     const [openPopup, setOpenPopup] = useState(false);

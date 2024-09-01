@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
-
 export default function Table() {
     return (
         <LoansStyle>
             <div className="bloco">
                 <div className="aviso">
-                    <h1>Nova Área de Crédito</h1>
-                    <p>Visualize suas solicitações, conceções e histórico de crédito. Após fazer a solicitação seu processo será analisado e você receberá o retorno assim que possível.</p>
+                    <h1>Pedir empréstimo</h1>
+                    <p>Solicite um empréstimo para a sua empresa. Após fazer a solicitação seu processo será analisado e você receberá o retorno assim que possível.</p>
                 </div>
                 <div className="info">
                     <text className="info1">Crédito</text>

@@ -1,5 +1,5 @@
 import { Content } from "@google-cloud/vertexai";
-import model from "../../../../_common/model";
+import model from "../../../_common/model";
 import { informationToExtractPrompt } from "./consts";
 import { buildHistory } from "./utils";
 

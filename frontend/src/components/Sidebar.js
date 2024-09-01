@@ -3,55 +3,55 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import AddIcon from "@mui/icons-material/Add";
 
 export default function Sidebar() {
-    return (
-        <SidebarStyle>
-            <div id="sidebar">
-                <div id="menu-header">
-                    <img
-                        id="menu-logo"
-                        className="menu-icon"
-                        src="./images/logo.svg"
-                        alt="Logo"
-                    ></img>
-                </div>
-                <div id="menu-body">
-                    <span className="menu-text">Extrato</span>
-                    <span className="menu-text">Membros</span>
-                    <span className="menu-text">Crédito</span>
-                    <div className="menu-item">
-                        <ArrowRightIcon className="menu-icon" />
-                        <span>Investimentos</span>
-                    </div>
-                    <div className="menu-item">
-                        <ArrowRightIcon className="menu-icon" />
-                        <span>Recebimentos</span>
-                    </div>
-                    <div className="menu-item">
-                        <ArrowRightIcon className="menu-icon" />
-                        <span>Cartão Corporativo</span>
-                        <AddIcon className="add-icon" />
-                    </div>
-                    <div className="menu-item">
-                        <ArrowRightIcon className="menu-icon" />
-                        <span>Integrações</span>
-                    </div>
-                    <div className="menu-item">
-                        <ArrowRightIcon className="menu-icon" />
-                        <span>Consultas</span>
-                    </div>
-                    <div className="menu-item">
-                        <ArrowRightIcon className="menu-icon" />
-                        <span>Pagamentos</span>
-                        <AddIcon className="add-icon" />
-                    </div>
-                </div>
-                <div id="menu-footer">
-                    <p>Hackathon Account 518467</p>
-                    <p>hackathon-518467.sandbox.starkbank.com</p>
-                </div>
-            </div>
-        </SidebarStyle>
-    );
+  return (
+    <SidebarStyle>
+      <div id="sidebar">
+        <div id="menu-header">
+          <img
+            id="menu-logo"
+            className="menu-icon"
+            src="./images/logo.svg"
+            alt="Logo"
+          ></img>
+        </div>
+        <div id="menu-body">
+          <span className="menu-text">Extrato</span>
+          <span className="menu-text">Membros</span>
+          <span className="menu-text">Crédito</span>
+          <div className="menu-item">
+            <ArrowRightIcon className="menu-icon" />
+            <span>Investimentos</span>
+          </div>
+          <div className="menu-item">
+            <ArrowRightIcon className="menu-icon" />
+            <span>Recebimentos</span>
+          </div>
+          <div className="menu-item">
+            <ArrowRightIcon className="menu-icon" />
+            <span>Cartão Corporativo</span>
+            <AddIcon className="add-icon" />
+          </div>
+          <div className="menu-item">
+            <ArrowRightIcon className="menu-icon" />
+            <span>Integrações</span>
+          </div>
+          <div className="menu-item">
+            <ArrowRightIcon className="menu-icon" />
+            <span>Consultas</span>
+          </div>
+          <div className="menu-item">
+            <ArrowRightIcon className="menu-icon" />
+            <span>Pagamentos</span>
+            <AddIcon className="add-icon" />
+          </div>
+        </div>
+        <div id="menu-footer">
+          <p>Hackathon Account 518467</p>
+          <p>hackathon-518467.sandbox.starkbank.com</p>
+        </div>
+      </div>
+    </SidebarStyle>
+  );
 }
 
 const SidebarStyle = styled.div`
@@ -90,7 +90,7 @@ const SidebarStyle = styled.div`
     margin-bottom: 15px;
     margin-left: 35px;
     font-size: 16px;
-    color: #4a4a4a;
+    color: #637282;
     cursor: pointer;
   }
 
@@ -99,27 +99,27 @@ const SidebarStyle = styled.div`
     align-items: center;
     margin-bottom: 15px;
     font-size: 16px;
-    color: #4a4a4a;
+    color: #637282;
     cursor: pointer;
     position: relative;
   }
 
   .menu-icon {
     margin-right: 10px;
-    color: #4a4a4a;
+    color: #1b2733;
   }
 
   .add-icon {
     position: absolute;
     right: 0;
-    color: #4a4a4a;
+    color: #1b2733;
   }
 
   #menu-footer {
     padding-left: 20px;
     padding-bottom: 20px;
     font-size: 14px;
-    color: #4a4a4a;
+    color: #637282;
   }
 
   #menu-footer p:last-child {

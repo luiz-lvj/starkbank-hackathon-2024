@@ -1,7 +1,7 @@
 import { Content } from "@google-cloud/vertexai";
 import model from "../../../_common/model";
 import { informationToExtractPrompt } from "./consts";
-import { buildHistory } from "./utils";
+import { buildHistory, sanitizeString } from "./utils";
 
 async function extractSocialContractInformations(fileUri: string) {
     const buildPrompts = informationToExtractPrompt.map(prompt => buildHistory(prompt, fileUri));
@@ -19,7 +19,9 @@ async function extractSocialContractInformations(fileUri: string) {
 
     console.log('contents', contents.map(content => content.parts?.map(part => part.text)));
 
-    const dataObj = JSON.parse(dataString.join(''));
+    const sanitizedDataString = sanitizeString(dataString.join(''));
+
+    const dataObj = JSON.parse(sanitizedDataString);
 
     return dataObj;
 }

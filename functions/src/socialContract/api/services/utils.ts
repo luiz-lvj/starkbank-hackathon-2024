@@ -16,3 +16,12 @@ export function buildHistory(prompt: string, fileUri: string): Content[] {
         }
     ];
 }
+
+export function sanitizeString(text: string) {
+    const startIndex = text.indexOf('{');
+    const endIndex = text.lastIndexOf('}');
+    if (startIndex !== -1 && endIndex !== -1 && endIndex > startIndex) {
+        return text.substring(startIndex, endIndex + 1);
+    }
+    return text;
+}

@@ -2,4 +2,5 @@ import { initializeApp } from "firebase-admin/app";
 
 initializeApp();
 
-export * from './socialContract';
+export * as socialContract from './socialContract';
+export * as loan from './loan';

@@ -1,11 +1,7 @@
 import { useCallback } from 'react';
 import SocialContractClient from '../clients/socialContract';
+import LoanClient from '../clients/loan';
 import { collection, addDoc, getFirestore } from 'firebase/firestore';
-
-/**
- * @typedef {Object} LoanConfig
- * @property {string} [fileUri] - O URI do arquivo do contrato social (opcional)
- */
 
 // Aqui ficarão todas as funções que fazem requests para a API
 export const useApiClient = () => {
@@ -24,20 +20,16 @@ export const useApiClient = () => {
         }
     };
     
-    /**
-     * Solicita um empréstimo
-     * @param {number} amount - O valor do empréstimo solicitado
-     * @param {LoanConfig} config - Configurações adicionais do empréstimo
-     * @returns {Promise<Object>} Uma promessa que resolve com o resultado da solicitação
-     */
-    const requestLoan = async (amount, config) => {
-        if (config.fileUri) {
-            const socialContract = await extractSocialContract(config.fileUri);
+    const requestLoan = async (amount, fileUri) => {
+        if (fileUri !== undefined) {
+            const socialContract = await extractSocialContract(fileUri);
             console.log(socialContract);
+            const result = await LoanClient.requestLoan({ requestAmount: amount, socialContract: socialContract });
+            return result;
+        } else {
+            const result = await LoanClient.requestLoan({ requestAmount: amount });
+            return result;
         }
-
-        // TODO: Request loan
-        return { success: true, message: 'Empréstimo solicitado com sucesso' };
     };
 
     const saveFilter = async (filter) => {

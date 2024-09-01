@@ -1,17 +1,24 @@
 import styled from "styled-components";
 import { useState, useEffect } from 'react';
-import { useApiClient } from '../../hooks/api';
 import moment from 'moment';
+import { collection, onSnapshot, getFirestore } from 'firebase/firestore';
 
 export default function Table() {
     const [loans, setLoans] = useState([]);
 
-
-    const { getLoans } = useApiClient();
-
     useEffect(() => {
-        getLoans().then(setLoans);
-    }, [getLoans]);
+        const db = getFirestore();
+        const unsubscribe = onSnapshot(collection(db, "loans"), (snapshot) => {
+            const updatedLoans = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            setLoans(updatedLoans);
+        });
+
+        // Limpeza ao desmontar o componente
+        return () => unsubscribe();
+    }, []);
 
     return (
         <LoansStyle>
@@ -36,7 +43,6 @@ export default function Table() {
                         </tr>
                         </thead>
                         <tbody>
-                        {/* As linhas de dados virão aqui */}
                         {loans.map((loan) => (
                             <tr key={loan.id}>
                                 <td>{`R$ ${loan.loanAmount.toFixed(2)}`}</td>

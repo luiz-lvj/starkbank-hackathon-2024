@@ -81,9 +81,9 @@ function LoanPopup({ open, onClose }) {
 
         const simulateLoadingMessages = async () => {
           const messages = [
-            'Validando seu score...',
-            'Analisando o documento...',
-            'Procurando melhores alternativas...'
+            'Buscando dados...',
+            'Analisando documentos...',
+            'Calculando o score...'
           ];
 
           for (const message of messages) {
@@ -153,10 +153,11 @@ function LoanPopup({ open, onClose }) {
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
             />
-            <Typography variant="body2" color="textSecondary" gutterBottom>
-              Faça o upload do contrato social para garantir melhor aprovação do seu empréstimo.
+            <Typography variant="body2" color="textSecondary" gutterBottom style={{ margin: '10px 0' }}>
+              Faça o upload do contrato social para garantir melhor <br/> aprovação do seu empréstimo.
             </Typography>
             <input
+              className='upload-input'
               accept="application/pdf"
               style={{ display: 'none' }}
               id="pdf-upload"

@@ -1,18 +1,14 @@
 import styled from "styled-components";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import AddIcon from "@mui/icons-material/Add";
+import starkBankLogo from '../assets/starkbank-logo.png';
 
 export default function Sidebar() {
   return (
     <SidebarStyle>
       <div id="sidebar">
         <div id="menu-header">
-          <img
-            id="menu-logo"
-            className="menu-icon"
-            src="./images/logo.svg"
-            alt="Logo"
-          ></img>
+          <img src={starkBankLogo} alt="Logo" className="menu-logo" />
         </div>
         <div id="menu-body">
           <span className="menu-text">Extrato</span>
@@ -74,11 +70,6 @@ const SidebarStyle = styled.div`
     margin-bottom: 20px;
   }
 
-  #menu-logo {
-    width: 40px;
-    height: 40px;
-  }
-
   #menu-body {
     display: flex;
     flex-direction: column;
@@ -92,6 +83,14 @@ const SidebarStyle = styled.div`
     font-size: 16px;
     color: #637282;
     cursor: pointer;
+  }
+
+  .menu-logo {
+    width: 40px;
+    object-fit: contain;
+    justify-content: flex-start;
+    margin-right: auto;
+    margin-left: 30px;
   }
 
   .menu-item {
@@ -111,7 +110,7 @@ const SidebarStyle = styled.div`
 
   .add-icon {
     position: absolute;
-    right: 0;
+    right: 10px;
     color: #1b2733;
   }
 

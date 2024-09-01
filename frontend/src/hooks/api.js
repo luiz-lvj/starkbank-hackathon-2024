@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import SocialContractClient from '../clients/socialContract';
+import { collection, addDoc, getFirestore } from 'firebase/firestore';
 
 /**
  * @typedef {Object} LoanConfig
@@ -39,8 +40,15 @@ export const useApiClient = () => {
         return { success: true, message: 'Empréstimo solicitado com sucesso' };
     };
 
+    const saveFilter = async (filter) => {
+        const db = getFirestore();
+        await addDoc(collection(db, "filters"), filter);
+        return { success: true, message: 'Filtro salvo com sucesso' };
+    };
+
     return {
         extractSocialContract: useCallback(extractSocialContract, []),
         requestLoan: useCallback(requestLoan, []),
+        saveFilter: useCallback(saveFilter, []),
     };
 };

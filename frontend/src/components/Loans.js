@@ -12,7 +12,7 @@ export default function Loans() {
                 <div className="info">
                     <text className="info1">Crédito</text>
                     <div className="periodo">
-                        <text>Período: Abril 2024 - Setembro 2024</text>
+                        <span>Período: Abril 2024 - Setembro 2024</span>
                     </div>
                 </div>
                 <div className="tabela">

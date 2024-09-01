@@ -1,17 +1,30 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Button } from "@mui/material";
+import LoanPopup from "./LoanDialog";
 
 export default function RightBar() {
+    const [openPopup, setOpenPopup] = useState(false);
+
+    const handleOpenPopup = () => {
+        setOpenPopup(true);
+    };
+
     return (
         <SidebarContainer>
             <div className="button-container">
-                <Button variant="contained" className="loan-button loan-button--request">
+                <Button 
+                    variant="contained" 
+                    className="loan-button loan-button--request"
+                    onClick={handleOpenPopup}
+                >
                     Solicitar empréstimo
                 </Button>
                 <Button variant="outlined" className="loan-button loan-button--pay">
                     Quitar empréstimo
                 </Button>
             </div>
+            <LoanPopup open={openPopup} onClose={() => setOpenPopup(false)} />
         </SidebarContainer>
     );
 }

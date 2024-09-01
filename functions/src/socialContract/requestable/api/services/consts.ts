@@ -5,7 +5,7 @@ export const socialCapitalPrompt = (() => [
     `- Capital social.`,
     `- Nome dos sócios.`,
     `- CPF dos sócios.`,
-    `- Atividades econômicas.`,
+    `- Atividades econômicas, como um array de palavras chaves.`,
     `- CEP da localidade de cada um dos sócios.`,
     `- CEP da localidade da sede da empresa.`,
     `- Tipo de empresa (se é SA, LTDA, etc).`,
